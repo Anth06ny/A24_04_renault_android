@@ -5,21 +5,18 @@ import com.amonteiro.a24_04_renault_android.model.CarBean;
 
 public class Temp {
 
+    public static void main(String[] args) {
+        CarBean c = new CarBean();
+    }
+
     private String marque;
     private String model;
 
-
-
-    public static void main(String[] args) {
-
-        double res = ExoKotlinKt.boulangerie(0,5,0);
-
-        System.out.println(res);
-
-        CarBean car = new CarBean("","");
-        CarBean car2 = new CarBean();
-
+    public Temp(String marque, String model) {
+        this.marque = marque;
+        this.model = model;
     }
+
 
     public String getMarque() {
         return marque;

@@ -1,12 +1,27 @@
 package com.amonteiro.a24_04_renault_android.model
 
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
 fun main() {
-    val res = WeatherAPI.loadWeather("Nice")
-    println("Il fait ${res.main.temp}° à ${res.name} avec un vent de ${res.wind.speed} m/s")
+//    val res = WeatherAPI.loadWeather("Nice")
+//    println("Il fait ${res.main.temp}° à ${res.name} avec un vent de ${res.wind.speed} m/s")
+
+    val flow: Flow<WeatherBean> = WeatherAPI.getWeathers("Nice", "Toulouse", "Paris")
+        .filter { it.wind.speed > 0 }
+
+
+    runBlocking {
+        flow.collect {
+            println("Il fait ${it.main.temp}° à ${it.name} avec un vent de ${it.wind.speed} m/s")
+        }
+    }
 }
 
 object WeatherAPI {
@@ -20,10 +35,17 @@ object WeatherAPI {
 
     fun loadWeather(cityName: String): WeatherBean {
         //Requete
-        val json : String = sendGet("$URL_API$cityName")
+        val json: String = sendGet("$URL_API$cityName")
         println("json=$json")
         //parsing
         return gson.fromJson(json, WeatherBean::class.java)
+    }
+
+    fun getWeathers(vararg cities: String) = flow<WeatherBean> {
+            cities.forEach {
+                emit(WeatherAPI.loadWeather(it))
+                delay(1000)
+            }
     }
 
     fun sendGet(url: String): String {
@@ -44,9 +66,9 @@ object WeatherAPI {
 
 data class WeatherBean(
     var name: String,
-    var wind : WindBean,
-    var main : DescriptionBean
+    var wind: WindBean,
+    var main: DescriptionBean
 )
 
-data class WindBean(var speed:Double)
-data class DescriptionBean(var temp:Double)
+data class WindBean(var speed: Double)
+data class DescriptionBean(var temp: Double)

@@ -5,13 +5,31 @@ import com.amonteiro.a24_04_renault_android.PRICE_CROIS
 import com.amonteiro.a24_04_renault_android.PRICE_SAND
 
 fun main() {
+    val (u1, u2, u3) = get3Users()
+    println(u1)
+    println(u2)
+    println(u3)
 
-    var v2 : String? = "Toto"
-    var v1 : String  = "String"
+    var i = 3
+    var j = 3
+    var k = 3
 
-    test(::scanText)
+
+
 
 }
+
+fun get3Users(): Triple<UserBean, UserBean, UserBean> {
+    print("Donnez 3 nom : ")
+    var (na1, na2, na3)  = readlnOrNull()!!.split(' ')
+    print("Donnez 3 note : ")
+    var (no1, no2, no3)  = readlnOrNull()!!.split(' ').map { it.toInt() }
+
+    return Triple(UserBean(na1, no1), UserBean(na2, no2), UserBean(na3, no3))
+}
+
+class MyPair<out  T, U : Number?>(val first :T, var second :U)
+
 
 fun test(lambda : (String) -> String) {
 

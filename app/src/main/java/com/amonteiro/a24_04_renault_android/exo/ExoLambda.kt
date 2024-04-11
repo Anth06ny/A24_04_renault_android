@@ -1,6 +1,5 @@
 package com.amonteiro.a24_04_renault_android.exo
 
-import com.amonteiro.a24_04_renault_android.model.WeatherAPI
 import java.util.Calendar
 
 
@@ -8,8 +7,7 @@ data class UserBean(var name: String, var old: Int)
 
 
 fun main() {
-    println("dayTime=${createPairTime()}")
-    println("dayTime2=${createPairTime2()}")
+    exo3()
 }
 
 fun createPairTime(): Pair<Long, Long> {
@@ -27,16 +25,15 @@ fun createPairTime(): Pair<Long, Long> {
 }
 
 fun createPairTime2() = Pair(
-        Calendar.getInstance().apply {
-            set(Calendar.MINUTE, 0)
-            set(Calendar.HOUR_OF_DAY, 0)
-        }.timeInMillis /1000,
-        Calendar.getInstance().apply {
-            set(Calendar.MINUTE, 59)
-            set(Calendar.HOUR_OF_DAY, 23)
-        }.timeInMillis /1000)
-
-
+    Calendar.getInstance().apply {
+        set(Calendar.MINUTE, 0)
+        set(Calendar.HOUR_OF_DAY, 0)
+    }.timeInMillis / 1000,
+    Calendar.getInstance().apply {
+        set(Calendar.MINUTE, 59)
+        set(Calendar.HOUR_OF_DAY, 23)
+    }.timeInMillis / 1000
+)
 
 
 inline fun myHighOrderFunction(p1: Int = 5, block: (Int) -> String = { "" }) {
@@ -62,7 +59,11 @@ fun exo3() {
     println("Afficher la sous liste de personne ayant 10 et +")
     //println(list.filter { it.note >=10 })
     //Pour un affichage de notre choix
-    println(list.filter { it.note >= 10 }.joinToString("\n") { "-${it.name} : ${it.note}" })
+    println(list.filter { it.note >= 10 }.joinToString("\n") { (name, note) ->
+        "-${name} : ${note}"
+
+    }
+    )
 
     val isToto: (PersonBean) -> Boolean = { it.name.equals("toto", true) }
     //TODO

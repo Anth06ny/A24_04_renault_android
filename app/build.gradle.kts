@@ -59,6 +59,14 @@ dependencies {
     //Image url
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
+    //Coroutine
+    //Utilisation générale
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:+")
+//LifeCycleScope
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.+")
+//ViewModelScope
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.+")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
