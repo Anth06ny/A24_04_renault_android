@@ -9,6 +9,11 @@ fun main() {
     var v2 : String? = "Toto"
     var v1 : String  = "String"
 
+    test(::scanText)
+
+}
+
+fun test(lambda : (String) -> String) {
 
 }
 
